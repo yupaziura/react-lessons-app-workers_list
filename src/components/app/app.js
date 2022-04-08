@@ -9,9 +9,12 @@ import EmployeesFormAdd from '../employees-form-add/employees-form-add';
 function App () {
 
     const data = [
-        {name: 'Yuliia Paziura', payrate: 1000, increase: true},
-        {name: 'Max Solodko', payrate: 2000, increase: false},
-        {name: 'Nataliia Paziura', payrate: 3000, increase: true}
+        // if we paste here new obj
+        // all will be rerendered
+        // so we have to set id key
+        {name: 'Yuliia Paziura', payrate: 1000, increase: true, id: 0},
+        {name: 'Max Solodko', payrate: 2000, increase: false, id: 1},
+        {name: 'Nataliia Paziura', payrate: 3000, increase: true, id: 2}
     ];
 
     return (
