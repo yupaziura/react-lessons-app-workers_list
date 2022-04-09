@@ -17,12 +17,27 @@ class EmployeesFormAdd extends Component {
         })
     }
 
+    submt = (e) => {
+        // prevent pages reload
+        e.preventDefault();
+        
+        // call function to create new array element
+        this.props.onAdd(this.state.name, this.state.payrate);
+
+        // reset form and values
+        this.setState({ name: '',payrate: ''});
+        e.target.reset()
+    }
+
     render () {
+
         return (
             <div className="app-add-form">
                 <h3>Add employee</h3>
                 <form
-                    className="add-form d-flex">
+                    className="add-form d-flex"
+                    onSubmit={this.submt}
+                    >
                     <input type="text"
                         className="form-control new-post-label"
                         placeholder="Name"
@@ -39,7 +54,8 @@ class EmployeesFormAdd extends Component {
                         />
     
                     <button type="submit"
-                            className="btn btn-outline-light">Add</button>
+                            className="btn btn-outline-light"
+                            >Add</button>
                 </form>
             </div>
         )

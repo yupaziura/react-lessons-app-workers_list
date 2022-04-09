@@ -15,10 +15,11 @@ class App extends Component {
                 // if we paste here new obj
                 // all will be rerendered
                 // so we have to set id key
-                {name: 'Yuliia Paziura', payrate: 1000, increase: true, id: 0},
-                {name: 'Max Solodko', payrate: 2000, increase: false, id: 1},
-                {name: 'Nataliia Paziura', payrate: 3000, increase: true, id: 2}
-            ]
+                {name: 'Yuliia Paziura', payrate: 1000, id: 0},
+                {name: 'Max Solodko', payrate: 2000, id: 1},
+                {name: 'Nataliia Paziura', payrate: 3000, id: 2}
+            ],
+            idMin: 2
         }
     }
 
@@ -27,6 +28,20 @@ class App extends Component {
             return {
                 data: data.filter (item => item.id !== id)
             }
+        })
+    }
+
+    addItem = ( name, payrate) => {
+        
+        this.setState(() => {
+            // create a copy for array
+            let newArr = JSON.parse(JSON.stringify(this.state.data));
+            
+            // construct new item and push to copied array
+            const item = {name: name, payrate: payrate, id: this.state.idMin + 1 }
+            newArr.push(item)
+            
+            return {data: newArr, idMin: this.state.idMin + 1}
         })
     }
 
@@ -44,7 +59,7 @@ class App extends Component {
     
                 <EmployeesList data={this.state.data} onDelete={this.deleteItem}/>
     
-                <EmployeesFormAdd/>
+                <EmployeesFormAdd onAdd={(name, payrate) => this.addItem(name, payrate)}/>
             </div>
         )
     
