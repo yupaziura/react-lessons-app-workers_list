@@ -15,13 +15,14 @@ class App extends Component {
                 // if we paste here new obj
                 // all will be rerendered
                 // so we have to set id key
-                {name: 'Yuliia Paziura', payrate: 1000, id: 0},
-                {name: 'Max Solodko', payrate: 2000, id: 1},
-                {name: 'Nataliia Paziura', payrate: 3000, id: 2}
+                {name: 'Yuliia Paziura', payrate: 1000, increase: true, rise: false, id: 0},
+                {name: 'Max Solodko', payrate: 2000, increase: false, rise: true, id: 1},
+                {name: 'Nataliia Paziura', payrate: 3000, increase: false, rise: false, id: 2}
             ],
             idMin: 2
         }
     }
+
 
     deleteItem = (id) => {
         this.setState(({data}) => {
@@ -38,26 +39,62 @@ class App extends Component {
             let newArr = JSON.parse(JSON.stringify(this.state.data));
             
             // construct new item and push to copied array
-            const item = {name: name, payrate: payrate, id: this.state.idMin + 1 }
+            const item = {name: name, payrate: payrate, increase: false, rise: false, id: this.state.idMin + 1 }
             newArr.push(item)
-            
+
             return {data: newArr, idMin: this.state.idMin + 1}
         })
     }
 
+    toggleIncr = (id) => {
+        this.setState(({data}) => {
+            return {
+                data: data.map(item => {
+                    if (item.id === id){
+                        return {...item, increase: !item.increase}
+                    }
+                    else {
+                        return item;
+                    }
+                })
+            }
+        })
+    }
+
+    toggleRise = (id) => {
+        this.setState(({data}) => {
+            return {
+                data: data.map(item => {
+                    if (item.id === id){
+                        return {...item, rise: !item.rise}
+                    }
+                    else {
+                        return item;
+                    }
+                })
+            }
+        })    }
+
+    filterIncr = () => {
+        const newArr = this.state.data.filter(item => item.increase === true);
+        return newArr.length
+    }
+
     render() {
 
-    
         return (
             <div className="app">
-                <AppInfo></AppInfo>
+                <AppInfo  total={this.state.data.length} test={this.filterIncr}/>
     
                 <div className="search-panel">
                     <SearchPanel/>
                     <AppFilter/>
                 </div>
     
-                <EmployeesList data={this.state.data} onDelete={this.deleteItem}/>
+                <EmployeesList  toggleIncr={this.toggleIncr} 
+                                toggleRise={this.toggleRise} 
+                                data={this.state.data} 
+                                onDelete={this.deleteItem}/>
     
                 <EmployeesFormAdd onAdd={(name, payrate) => this.addItem(name, payrate)}/>
             </div>

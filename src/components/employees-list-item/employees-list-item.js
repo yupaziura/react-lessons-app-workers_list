@@ -1,32 +1,9 @@
 import './employees-list-item.css';
-import {Component} from 'react';
 
-class EmployeesListItem extends Component {
 
-    constructor (props) {
-        super(props);
-        this.state = {
-            increase: false,
-            star: false
-        }
-    }
 
-    cookie = () => {
-        this.setState(() => {
-            return {increase: !this.state.increase}
-        })
-    }
+ const EmployeesListItem = ({name, payrate, onDelete, toggleIncr, toggleRise, increase, rise}) =>  {
 
-    star = () => {
-        this.setState(() => {
-            return {star: !this.state.star}
-        })
-    }
-
-    render () {
-
-        const {name, payrate, onDelete} = this.props;
-        const {increase, star} = this.state;
 
         let classNames = "list-group-item d-flex justify-content-between";
 
@@ -34,7 +11,7 @@ class EmployeesListItem extends Component {
             classNames += ' increase';
         }
 
-        if (star) {
+        if (rise) {
             classNames += ' like'
         }
             
@@ -43,7 +20,7 @@ class EmployeesListItem extends Component {
             <li className={classNames}>
                 <span 
                 className="list-group-item-label"
-                onClick = {this.star}
+                onClick={toggleRise}
                 >{name}</span>
                 <input 
                     type="text" 
@@ -53,7 +30,7 @@ class EmployeesListItem extends Component {
                         <button 
                             className="btn-cookie btn-sm"
                             type='button'
-                            onClick={this.cookie}
+                            onClick={toggleIncr}
                         >
                             <i className="fas fa-cookie"></i>
                         </button>
@@ -71,7 +48,7 @@ class EmployeesListItem extends Component {
             </li>
         )
     
-    }
+    
 
 }
 

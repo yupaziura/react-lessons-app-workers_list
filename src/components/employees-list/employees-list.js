@@ -2,7 +2,7 @@ import EmployeesListItem from "../employees-list-item/employees-list-item";
 import './employees-list.css';
 
 
-const EmployeesList = ({data, onDelete}) => {
+const EmployeesList = ({data, onDelete, toggleIncr, toggleRise}) => {
 
     const elem = data.map (item => {
        
@@ -21,7 +21,10 @@ const EmployeesList = ({data, onDelete}) => {
             // we can use spread operator
 
             // set key props
-            <EmployeesListItem key={id} {...itemData} onDelete={()=> {onDelete(id)}}/>
+            <EmployeesListItem  key={id} {...itemData} 
+                                onDelete={()=> {onDelete(id)}}
+                                toggleIncr={() => toggleIncr(id)}
+                                toggleRise={() => toggleRise(id)}/>
         )
     })
 
