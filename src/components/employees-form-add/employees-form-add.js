@@ -7,7 +7,8 @@ class EmployeesFormAdd extends Component {
         super(props);
         this.state = {
             name: '',
-            payrate: ''
+            payrate: '', 
+            classNames: "form-control new-post-label"
         }
     }
 
@@ -18,7 +19,10 @@ class EmployeesFormAdd extends Component {
     }
 
     submt = (e) => {
-        // prevent pages reload
+        e.preventDefault();
+
+        if (this.state.name.length>1 && this.state.payrate!== '') {
+                    // prevent pages reload
         e.preventDefault();
         
         // call function to create new array element
@@ -26,11 +30,23 @@ class EmployeesFormAdd extends Component {
 
         // reset form and values
         this.setState({ name: '',payrate: ''});
+
+        // return classes 
+        this.setState({classNames: "form-control new-post-label"})
         e.target.reset()
+        }
+
+        else {
+            this.setState(() => {
+                return {
+                    classNames: 'error'
+                }
+            })
+             
+        }
     }
 
     render () {
-
         return (
             <div className="app-add-form">
                 <h3>Add employee</h3>
@@ -39,14 +55,14 @@ class EmployeesFormAdd extends Component {
                     onSubmit={this.submt}
                     >
                     <input type="text"
-                        className="form-control new-post-label"
+                        className= {this.state.classNames}
                         placeholder="Name"
                         name = 'name'
                         onChange={this.onValue}
                         valuse={this.state.name}
                         />
                     <input type="number"
-                        className="form-control new-post-label"
+                        className={this.state.classNames}
                         placeholder="Payrate" 
                         name = 'payrate'
                         onChange={this.onValue}
