@@ -20,7 +20,8 @@ class App extends Component {
                 {name: 'Nataliia Paziura', payrate: 3000, increase: false, rise: false, id: 2}
             ],
             search: '',
-            idMin: 2
+            idMin: 2, 
+            filter: 'all',
         }
     }
 
@@ -94,21 +95,39 @@ class App extends Component {
 
     setSearch = (text) => {
         this.setState({search: text});
-        return
+        
+    }
+
+    filterButtons = (data, filter) => {
+        if (filter === 'star') {
+            return data.filter((item) => {
+                return item.rise
+            })
+        }
+        else if (filter === 'cookie'){
+            return data.filter((item) => {
+                return item.increase 
+            })  
+        }
+        return data
+    }
+
+    setFilter = (filter) => {
+        this.setState({filter: filter})
     }
 
 
     render() {
 
-        const filteredData = this.onSearch(this.state.data, this.state.search);
+        const filteredData = this.filterButtons(this.onSearch(this.state.data, this.state.search), this.state.filter);
 
         return (
             <div className="app">
-                <AppInfo  total={this.state.data.length} test={this.filterIncr}/>
+                <AppInfo  total={filteredData.length} test={this.filterIncr}/>
     
                 <div className="search-panel">
                     <SearchPanel setSearch={this.setSearch}/>
-                    <AppFilter/>
+                    <AppFilter filter={this.state.filter} setFilter={this.setFilter}/>
                 </div>
     
                 <EmployeesList  toggleIncr={this.toggleIncr} 
