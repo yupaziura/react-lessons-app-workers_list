@@ -19,6 +19,7 @@ class App extends Component {
                 {name: 'Max Solodko', payrate: 2000, increase: false, rise: true, id: 1},
                 {name: 'Nataliia Paziura', payrate: 3000, increase: false, rise: false, id: 2}
             ],
+            search: '',
             idMin: 2
         }
     }
@@ -80,20 +81,39 @@ class App extends Component {
         return newArr.length
     }
 
+    onSearch = (data, search) => {
+        if (search.length === 0) {
+            return data
+        }
+       
+        return  data.filter((i) => {
+            return i.name.indexOf(search) > -1
+        })
+        
+    }
+
+    setSearch = (text) => {
+        this.setState({search: text});
+        return
+    }
+
+
     render() {
+
+        const filteredData = this.onSearch(this.state.data, this.state.search);
 
         return (
             <div className="app">
                 <AppInfo  total={this.state.data.length} test={this.filterIncr}/>
     
                 <div className="search-panel">
-                    <SearchPanel/>
+                    <SearchPanel setSearch={this.setSearch}/>
                     <AppFilter/>
                 </div>
     
                 <EmployeesList  toggleIncr={this.toggleIncr} 
                                 toggleRise={this.toggleRise} 
-                                data={this.state.data} 
+                                data={filteredData} 
                                 onDelete={this.deleteItem}/>
     
                 <EmployeesFormAdd onAdd={(name, payrate) => this.addItem(name, payrate)}/>
