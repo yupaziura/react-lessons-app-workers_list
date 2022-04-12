@@ -46,6 +46,15 @@ class EmployeesFormAdd extends Component {
         }
     }
 
+    // we can create static methods
+    // so we can use it with class
+    static onLog = () => {
+        console.log('static log')
+    }
+
+    // or variables
+    static sVar =  'static var';
+
     render () {
         return (
             <div className="app-add-form">
@@ -78,5 +87,8 @@ class EmployeesFormAdd extends Component {
     
     }
 }
+
+EmployeesFormAdd.onLog();
+console.log(EmployeesFormAdd.sVar)
 
 export default EmployeesFormAdd;
