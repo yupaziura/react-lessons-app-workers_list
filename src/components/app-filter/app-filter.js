@@ -20,11 +20,11 @@ class AppFilter extends Component {
         const btnsData = [
             {name: 'all', text: 'All employees'},
             {name: 'cookie', text: 'Promotion'},
-            {name: 'star', text: 'Hight payrate '},
+            {name: 'star', text: 'Hight payrate ', colored: true},
         ];
 
 
-        const buttons = btnsData.map(({name, text}) => {
+        const buttons = btnsData.map(({name, text, colored}) => {
             let active;
 
             if (this.props.filter === name) {
@@ -35,6 +35,7 @@ class AppFilter extends Component {
             }
 
             const classBtn = active? 'btn-light' : 'btn-outline-light';
+            const style = colored? {backgroundColor: 'red'} : null;
 
             return (
                 <button 
@@ -42,6 +43,10 @@ class AppFilter extends Component {
                     type ="button"
                     key={name}
                     onClick = {() => this.props.setFilter(name)}
+                    // dynamic styles
+                    // style={colored? {backgroundColor: 'red'} : null}
+                    // or
+                    style={style}
                     >
                         {text}
                 </button>
